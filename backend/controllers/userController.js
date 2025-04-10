@@ -1,11 +1,12 @@
 import asyncHandler from '../middlewares/asyncHandler.js';
 import User from '../models/User.js';
 import generateToken from '../generateToken.js';
+import jwt from 'jsonwebtoken';
 
 // @desc    Auth user & get token
-// @route   POST /api/users/auth
+// @route   POST /api/users/login
 // @access  Public
-const authUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   const {email, password} = req.body;
 
   const user = await User.findOne({ email});
@@ -21,6 +22,28 @@ const authUser = asyncHandler(async (req, res) => {
   else{
     res.status(401);
     throw new Error('Invalid email or password');
+  }
+});
+
+// @desc    Auth user & get token
+// @route   POST /api/users/auth
+// @access  Public
+const authUser = asyncHandler(async (req, res) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        // Token is invalid or expired
+        return res.status(401).json({ message: 'Not authorized, invalid token' });
+      } else {
+        // Token is valid
+        return res.sendStatus(200);
+      }
+    });
+  } else {
+    // No token in the cookie
+    return res.status(401).json({ message: 'Not authorized, no token' });
   }
 });
 
@@ -183,6 +206,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 export {
   authUser,
+  loginUser,
   registerUser,
   logoutUser,
   getUserProfile,

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -7,13 +7,17 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const baseURL = 'http://localhost:5000'
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/editor';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', {
         email,
         password,
+      }, {
+        withCredentials: true, // <-- Important!
       });
       localStorage.setItem('userId', response.data._id);
       localStorage.setItem('userName', response.data.name);

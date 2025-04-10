@@ -12,7 +12,9 @@ const Navbar = () => {
       localStorage.removeItem('userId');
       localStorage.removeItem('userName');
       localStorage.removeItem('userEmail');
-      await axios.post('http://localhost:5000/api/users/logout'); 
+      await axios.post('http://localhost:5000/api/users/logout', {}, {
+        withCredentials: true
+      });      
       navigate('/login');
     }
     catch(error){
