@@ -6,7 +6,7 @@ const FeatureCard = ({ icon, title, description }) => {
   return (
     <Link
       to="/login"
-      className="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+      className="p-13 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
     >
       <div className="flex flex-col items-center text-center">
         <div className="text-blue-600 mb-4 text-4xl">{icon}</div>

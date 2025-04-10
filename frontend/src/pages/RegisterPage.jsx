@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const baseURL = 'http://localhost:5000'
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add authentication logic here
-    navigate('/editor');
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/register', {
+        name,
+        email,
+        password,
+      });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
   };
 
   return (
@@ -25,6 +39,8 @@ const RegisterPage = () => {
             <input
               type="name"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -35,6 +51,8 @@ const RegisterPage = () => {
             <input
               type="email"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -45,6 +63,8 @@ const RegisterPage = () => {
             <input
               type="password"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -56,6 +76,7 @@ const RegisterPage = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
+          <p>{message}</p>
           <button
             onClick={() => navigate("/login")}
             className="text-sm text-blue-600 hover:text-blue-800"

@@ -1,12 +1,27 @@
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
+  const baseURL = 'http://localhost:5000'
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add authentication logic here
-    navigate('/editor');
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/login', {
+        email,
+        password,
+      });
+      localStorage.setItem('userId', response.data._id);
+      localStorage.setItem('userName', response.data.name);
+      localStorage.setItem('userEmail', response.data.email);
+      navigate('/editor');
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
   };
 
   return (
@@ -23,6 +38,8 @@ const LoginPage = () => {
             <input
               type="email"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -33,6 +50,8 @@ const LoginPage = () => {
             <input
               type="password"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -44,6 +63,7 @@ const LoginPage = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
+          <p>{message}</p>
           <button
             onClick={() => navigate("/signup")}
             className="text-sm text-blue-600 hover:text-blue-800"

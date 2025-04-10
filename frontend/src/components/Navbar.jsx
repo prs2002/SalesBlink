@@ -1,8 +1,24 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-  const { user, logout } = "isn";
+
+  const user = (localStorage.getItem('userName')); 
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try{
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      await axios.post('http://localhost:5000/api/users/logout'); 
+      navigate('/login');
+    }
+    catch(error){
+      console.error('Error during logout:', error);
+    }
+  };
 
   return (
     <nav className="bg-blue-600 py-4 px-6 flex items-center justify-between">
@@ -13,7 +29,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-4">
         {user ? (
           <div className="flex items-center space-x-4">
-            <span className="text-gray-700">Welcome, {user.name}</span>
+            <span className="py-2 text-white">Hi {user}</span>
             <button
               onClick={handleLogout}
               className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
