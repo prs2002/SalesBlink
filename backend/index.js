@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
+import contactRoutes from './routes/contactRoutes.js';
+import emailRoutes from './routes/emailTemplateRoutes.js';
+import campaignRoutes from './routes/campaignRoutes.js';
 import cookieParser from 'cookie-parser';
 import connectDB from './db.js';
 
@@ -21,6 +24,8 @@ app.use(cors({
     allowedHeaders: 'Content-Type, Authorization', // Specify allowed headers
   }));
 
-app.use('/api/users',userRoutes);
+  app.use('/api/users',userRoutes);
+  app.use('/api/contacts',contactRoutes);
+  app.use('/api/email',emailRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
