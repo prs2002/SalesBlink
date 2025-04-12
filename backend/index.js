@@ -27,5 +27,6 @@ app.use(cors({
   app.use('/api/users',userRoutes);
   app.use('/api/contacts',contactRoutes);
   app.use('/api/email',emailRoutes);
+  app.use('/api/campaign',campaignRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,11 +1,10 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const FeatureCard = ({ icon, title, description }) => {
+const FeatureCard = ({ linkTo, icon, title, description }) => {
   return (
     <Link
-      to="/login"
+      to={linkTo}
       className="p-13 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
     >
       <div className="flex flex-col items-center text-center">
@@ -21,6 +20,7 @@ FeatureCard.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  linkTo: PropTypes.string.isRequired,
 };
 
 export default FeatureCard;

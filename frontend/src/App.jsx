@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/auth/LoginPage';
 import FlowEditor from './pages/FlowEditor';
-import RegisterPage from './pages/RegisterPage';
+import RegisterPage from './pages/auth/RegisterPage';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {

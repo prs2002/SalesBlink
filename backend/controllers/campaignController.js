@@ -26,3 +26,21 @@ export const getCampaigns = async (req, res) => {
     res.status(500).json({ message: 'Error fetching campaigns', error });
   }
 };
+
+export const addContactToCampaign = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { contactId } = req.body;
+
+  const campaign = await Campaign.findById(id);
+  if (!campaign) {
+    return res.status(404).json({ message: 'Campaign not found' });
+  }
+
+  // Only add if not already in the list
+  if (!campaign.contactIds.includes(contactId)) {
+    campaign.contactIds.push(contactId);
+    await campaign.save();
+  }
+
+  res.json({ message: 'Contact added to campaign', campaign });
+});
