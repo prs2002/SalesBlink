@@ -1,4 +1,5 @@
 import Campaign from '../models/Campaign.js';
+import asyncHandler from '../middlewares/asyncHandler.js' 
 
 export const createCampaign = async (req, res) => {
   const { name, status, contactIds, emailTemplateId, flowData } = req.body;

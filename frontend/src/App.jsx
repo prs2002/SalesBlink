@@ -16,6 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
+          
           <Route path="/editor" element={<PrivateRoute><FlowEditor /></PrivateRoute>} />
         </Routes>
       </div>
