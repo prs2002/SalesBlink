@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Mail, Plus, Trash2, Edit } from 'lucide-react';
-const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function EmailTemplates() {
   const [templates, setTemplates] = useState([]);

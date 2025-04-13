@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { Users, Eye, Plus, X } from 'lucide-react';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export function LeadSourceNode({ data, id }) {
   const [contacts, setContacts] = useState([]);
@@ -44,7 +45,7 @@ export function LeadSourceNode({ data, id }) {
 
   const handleCreateContact = async () => {
     try {
-      await axios.post(`${BASE_URL}api/contacts/add-contact`,newContact, {
+      await axios.post(`${BASE_URL}/api/contacts/add-contact`,newContact, {
         withCredentials: true, // <-- Important!
       });
       setShowCreateForm(false);
