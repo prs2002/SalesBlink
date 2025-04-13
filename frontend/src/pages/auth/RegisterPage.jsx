@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -9,12 +10,11 @@ const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const baseURL = 'http://localhost:5000'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users', {
+      const response = await axios.post(`${BASE_URL}/api/users`, {
         name,
         email,
         password,

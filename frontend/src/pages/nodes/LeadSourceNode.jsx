@@ -19,7 +19,7 @@ export function LeadSourceNode({ data, id }) {
 
   const fetchContacts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/contacts',{
+      const response = await axios.get(`${BASE_URL}/api/contacts`,{
         withCredentials: true, // <-- Important!
       });
       setContacts(response.data);
@@ -44,7 +44,7 @@ export function LeadSourceNode({ data, id }) {
 
   const handleCreateContact = async () => {
     try {
-      await axios.post('http://localhost:5000/api/contacts/add-contact',newContact, {
+      await axios.post(`${BASE_URL}api/contacts/add-contact`,newContact, {
         withCredentials: true, // <-- Important!
       });
       setShowCreateForm(false);

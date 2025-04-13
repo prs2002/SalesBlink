@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import { Mail, Plus, Eye, Edit } from 'lucide-react';
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export function EmailNode({ data, id }) {
   const [templates, setTemplates] = useState([]);
@@ -20,7 +21,7 @@ export function EmailNode({ data, id }) {
 
   const fetchTemplates = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/email',{
+      const response = await axios.get(`${BASE_URL}/api/email`,{
         withCredentials: true, // <-- Important!
       });
       setTemplates(response.data);
@@ -45,7 +46,7 @@ export function EmailNode({ data, id }) {
 
   const handleCreateTemplate = async () => {
     try {
-      await axios.post('http://localhost:5000/api/email/add-email',newTemplate , {
+      await axios.post(`${BASE_URL}/api/email/add-email`,newTemplate , {
         withCredentials: true, // <-- Important!
       });
       setShowEditor(false);

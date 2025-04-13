@@ -9,7 +9,7 @@ import scheduleRoutes from './routes/scheduleRoutes.js';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import agenda from './config/agenda.js';
-import { defineEmailJob } from './emailJob.js';
+import { defineEmailJob } from './config/emailJob.js';
 
 dotenv.config();
 connectDB();
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173', // Specific origin for your client
+    origin: 'http://salesblink-prs.vercel.app/', // Specific origin for your client
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed HTTP methods
     allowedHeaders: 'Content-Type, Authorization', // Specify allowed headers

@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { applyNodeChanges, applyEdgeChanges } from 'reactflow';
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const useFlowStore = create((set, get) => ({
+  
   nodes: [],
   edges: [],
   flowId: undefined,
@@ -59,13 +61,13 @@ export const useFlowStore = create((set, get) => ({
       name: "Email Sequence", // You might want to make this configurable
       status: "draft",
       emailTemplateId: emailNode?.data?.template?._id,
-      contactIds: leadSourceNode?.data?.contact ? [leadSourceNode.data.contact.userId] : [],
+      contactIds: leadSourceNode?.data?.contact ? [leadSourceNode.data.contact._id] : [],
       nodes,
       edges,
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/campaign/add-campaign', flowData, {
+      const response = await axios.post(`${BASE_URL}/api/campaign/add-campaign`, flowData, {
         withCredentials: true, // <-- Important!
       });
       set({ flowId: response.data._id });
@@ -93,7 +95,7 @@ export const useFlowStore = create((set, get) => ({
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/schedule/email', scheduleData, {
+      const response = await axios.post(`${BASE_URL}/api/schedule/email`, scheduleData, {
         withCredentials: true, // <-- Important!
       });
       console.log('Emails scheduled successfully:', response.data);

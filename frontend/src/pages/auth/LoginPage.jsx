@@ -1,19 +1,18 @@
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/editor';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', {
+      const response = await axios.post(`${BASE_URL}/api/users/login`, {
         email,
         password,
       }, {
@@ -22,7 +21,7 @@ const LoginPage = () => {
       localStorage.setItem('userId', response.data._id);
       localStorage.setItem('userName', response.data.name);
       localStorage.setItem('userEmail', response.data.email);
-      navigate('/editor');
+      navigate('/');
     } catch (error) {
       setMessage(error.response.data.message);
     }

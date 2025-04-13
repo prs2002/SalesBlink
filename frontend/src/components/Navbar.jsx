@@ -1,5 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Navbar = () => {
 
@@ -11,7 +12,7 @@ const Navbar = () => {
       localStorage.removeItem('userId');
       localStorage.removeItem('userName');
       localStorage.removeItem('userEmail');
-      await axios.post('http://localhost:5000/api/users/logout', {}, {
+      await axios.post(`${BASE_URL}/api/users/logout`, {}, {
         withCredentials: true
       });      
       navigate('/login');

@@ -1,6 +1,6 @@
 import Campaign from '../models/Campaign.js';
 import agenda from '../config/agenda.js';
-import { defineEmailJob } from '../emailJob.js';
+import { defineEmailJob } from '../config/emailJob.js';
 
 defineEmailJob(agenda);
 

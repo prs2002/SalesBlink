@@ -9,38 +9,38 @@ const HomePage = () => {
         <FeatureCard
           linkTo="/editor"
           icon={<Rocket />}
-          title="Getting Started"
-          description="Start your SalesBlink journey & get booked 🚀"
+          title="Start"
+          description=" Design and implement an email marketing sequence using a visual flowchart interface. 🚀"
         />
         <FeatureCard
-          linkTo="/editor"
+          linkTo="/templates"
           icon={<Send />}
-          title="Sequences"
-          description="Learn to launch & manage cold email sequences 📸"
+          title="Email templates"
+          description=" Manage email templates 📸"
         />
         <FeatureCard
-          linkTo="/editor"
+          linkTo="/contacts"
           icon={<Mail />}
-          title="Email Senders"
-          description="Learn to add & manage email addresses for sending emails 📸"
+          title="Manage Leads"
+          description="Add & manage your leads contacts  📸"
         />
         <FeatureCard
-          linkTo="/editor"
+          linkTo="/"
+          icon
+          title=""
+          description=""
+        />
+        <FeatureCard
+          linkTo="/campaigns"
           icon={<Rocket />}
-          title="Getting Started"
-          description="Start your SalesBlink journey & get booked 🚀"
+          title="Your Campaigns"
+          description="Your campaign history 🕰️"
         />
         <FeatureCard
-          linkTo="/editor"
-          icon={<Send />}
-          title="Sequences"
-          description="Learn to launch & manage cold email sequences 📸"
-        />
-        <FeatureCard
-          linkTo="/editor"
-          icon={<Mail />}
-          title="Email Senders"
-          description="Learn to add & manage email addresses for sending emails 📸"
+          linkTo="/"
+          icon
+          title=""
+          description=""
         />
       </div>
     </div>

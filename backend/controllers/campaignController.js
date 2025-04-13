@@ -29,20 +29,12 @@ export const getCampaigns = async (req, res) => {
   }
 };
 
-export const addContactToCampaign = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { contactId } = req.body;
+export const deleteCampaign = asyncHandler(async (req, res) => {
+  const campaign = await Campaign.findByIdAndDelete(req.params.id);
 
-  const campaign = await Campaign.findById(id);
   if (!campaign) {
     return res.status(404).json({ message: 'Campaign not found' });
   }
 
-  // Only add if not already in the list
-  if (!campaign.contactIds.includes(contactId)) {
-    campaign.contactIds.push(contactId);
-    await campaign.save();
-  }
-
-  res.json({ message: 'Contact added to campaign', campaign });
+  res.status(200).json({ message: 'Campaign deleted successfully' });
 });

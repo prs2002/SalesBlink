@@ -22,15 +22,27 @@ export const getTemplates = async (req, res) => {
   }
 };
 
-export const searchEmailTemplates = asyncHandler(async (req, res) => {
-    const { query } = req.query;
-  
-    const templates = await EmailTemplate.find({
-      $or: [
-        { name: { $regex: query, $options: 'i' } },
-        { subject: { $regex: query, $options: 'i' } }
-      ]
-    });
-  
-    res.json(templates);
-  });
+export const deleteEmailTemplate = asyncHandler(async (req, res) => {
+  const template = await EmailTemplate.findByIdAndDelete(req.params.id);
+  if (!template) {
+    return res.status(404).json({ message: 'Template not found' });
+  }
+
+  res.status(200).json({ message: 'Email template deleted successfully' });
+});
+
+export const updateEmailTemplate = asyncHandler(async (req, res) => {
+  const { subject, content } = req.body;
+
+  const template = await EmailTemplate.findById(req.params.id);
+
+  if (!template) {
+    return res.status(404).json({ message: 'Template not found' });
+  }
+
+  template.subject = subject || template.subject;
+  template.content = content || template.content;
+
+  const updatedTemplate = await template.save();
+  res.status(200).json(updatedTemplate);
+});

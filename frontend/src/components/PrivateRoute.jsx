@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -11,7 +12,7 @@ const PrivateRoute = ({ children }) => {
     const checkAuth = async () => {
       try {
         // Make an API call to your server to check if the JWT cookie is valid
-        const response = await axios.get('http://localhost:5000/api/users/auth', {
+        const response = await axios.get(`${BASE_URL}/api/users/auth`, {
           withCredentials: true,
         });
         if (response.status === 200) {

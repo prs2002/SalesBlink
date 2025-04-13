@@ -20,16 +20,13 @@ export const getContacts = async (req, res) => {
     res.status(500).json({ message: 'Error fetching contacts', error });
   }
 };
-
-export const searchContacts = asyncHandler(async (req, res) => {
-    const { query } = req.query;
   
-    const contacts = await Contact.find({
-      $or: [
-        { name: { $regex: query, $options: 'i' } },
-        { email: { $regex: query, $options: 'i' } }
-      ]
-    });
+export const deleteContact = asyncHandler(async (req, res) => {
+  const contact = await Contact.findByIdAndDelete(req.params.id);
+    if (!contact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
   
-    res.json(contacts);
-  });  
+    res.status(200).json({ message: 'Contact deleted successfully' });
+  });
+  
