@@ -14,7 +14,8 @@ export const createTemplate = async (req, res) => {
 
 export const getTemplates = async (req, res) => {
   try {
-    const templates = await EmailTemplate.find({ userId: req.user._id });
+    // const templates = await EmailTemplate.find({ userId: req.user._id });
+    const templates = await EmailTemplate.find({});
     res.json(templates);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching templates', error });

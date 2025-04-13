@@ -2,9 +2,9 @@ import asyncHandler from '../middlewares/asyncHandler.js';
 import Contact from '../models/Contact.js';
 
 export const createContact = async (req, res) => {
-  const { userId, name, email } = req.body;
+  const { name, email } = req.body;
   try {
-    const contact = new Contact({ userId, name, email });
+    const contact = new Contact({ userId: req.user._id, name, email });
     await contact.save();
     res.status(201).json(contact);
   } catch (error) {
