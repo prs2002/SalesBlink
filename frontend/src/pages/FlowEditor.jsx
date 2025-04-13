@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import ReactFlow, {
   Background,
   Controls,
   Panel,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { Plus, Save } from 'lucide-react';
+import { Plus, Save, Send } from 'lucide-react';
 import { useFlowStore } from "../store/flowStore";
 import { EmailNode } from './nodes/EmailNode';
 import { DelayNode } from './nodes/DelayNode';
@@ -17,7 +17,6 @@ const nodeTypes = {
   leadSourceNode: LeadSourceNode,
 };
 
-
 const FlowEditor = () => {
 
   const {
@@ -28,6 +27,7 @@ const FlowEditor = () => {
     onEdgesChange,
     onConnect,
     saveFlow,
+    scheduleEmails
   } = useFlowStore();
 
   const onDragOver = useCallback((event) => {
@@ -93,6 +93,13 @@ const FlowEditor = () => {
           >
             <Save className="w-4 h-4" />
             Save Flow
+          </button>
+          <button
+            onClick={scheduleEmails}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+          >
+            <Send className="w-4 h-4" />
+            Schedule Emails
           </button>
         </Panel>
       </ReactFlow>

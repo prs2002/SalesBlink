@@ -39,6 +39,7 @@ export function EmailNode({ data, id }) {
     const template = templates.find(t => t._id === templateId);
     if (template) {
       setSelectedTemplate(template);
+      data.template = template;
     }
   };
 

@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { applyNodeChanges, applyEdgeChanges } from 'reactflow';
+import axios from 'axios';
 
 export const useFlowStore = create((set, get) => ({
   nodes: [],
   edges: [],
+  flowId: undefined,
 
   addNode: (type, position) => {
     const newNode = {
@@ -45,8 +47,58 @@ export const useFlowStore = create((set, get) => ({
     }));
   },
 
-  saveFlow: () => {
+  saveFlow: async () => {
     const { nodes, edges } = get();
-    console.log('Saving flow:', { nodes, edges });
+    
+    // Find email template and contacts from nodes
+    const emailNode = nodes.find(node => node.type === 'emailNode');
+    const leadSourceNode = nodes.find(node => node.type === 'leadSourceNode');
+    
+    const flowData = {
+      userId: "your-user-id", // Replace with actual user ID
+      name: "Email Sequence", // You might want to make this configurable
+      status: "draft",
+      emailTemplateId: emailNode?.data?.template?._id,
+      contactIds: leadSourceNode?.data?.contact ? [leadSourceNode.data.contact.userId] : [],
+      nodes,
+      edges,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/campaign/add-campaign', flowData, {
+        withCredentials: true, // <-- Important!
+      });
+      set({ flowId: response.data._id });
+      console.log('Flow saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving flow:', error);
+    }
+  },
+
+  scheduleEmails: async () => {
+    const { flowId } = get();
+    if (!flowId) {
+      console.error('No flow ID available. Please save the flow first.');
+      return;
+    }
+
+    // Find delay node to get delay minutes
+    const delayNode = get().nodes.find(node => node.type === 'delayNode');
+    const delayMinutes = delayNode?.data?.delayMinutes || 0;
+
+    const scheduleData = {
+      campaignId: flowId,
+      createdAt: new Date().toISOString(),
+      delayMinutes: delayMinutes
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/schedule/email', scheduleData, {
+        withCredentials: true, // <-- Important!
+      });
+      console.log('Emails scheduled successfully:', response.data);
+    } catch (error) {
+      console.error('Error scheduling emails:', error);
+    }
   },
 }));
