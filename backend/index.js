@@ -28,7 +28,7 @@ app.use(cookieParser());
 //     allowedHeaders: 'Content-Type, Authorization', // Specify allowed headers
 //   }));
 app.use(cors({
-  origin: [process.env.FRONTEND_URL || 'http://localhost:5173'],
+  origin: 'https://salesblink-prs.vercel.app/',
   credentials: true,
 }));
 
