@@ -2,7 +2,7 @@ import Campaign from '../models/Campaign.js';
 import asyncHandler from '../middlewares/asyncHandler.js' 
 
 export const createCampaign = async (req, res) => {
-  const { name, status, contactIds, emailTemplateId, flowData } = req.body;
+  const { name, status, contactIds, emailTemplateId, nodes, edges } = req.body;
   try {
     const campaign = new Campaign({
       userId: req.user._id,
@@ -10,7 +10,8 @@ export const createCampaign = async (req, res) => {
       status,
       contactIds,
       emailTemplateId,
-      flowData
+      nodes,
+      edges
     });
     await campaign.save();
     res.status(201).json(campaign);

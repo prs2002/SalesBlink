@@ -5,8 +5,11 @@ import userRoutes from './routes/userRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import emailRoutes from './routes/emailTemplateRoutes.js';
 import campaignRoutes from './routes/campaignRoutes.js';
+import scheduleRoutes from './routes/scheduleRoutes.js';
 import cookieParser from 'cookie-parser';
-import connectDB from './db.js';
+import connectDB from './config/db.js';
+import agenda from './config/agenda.js';
+import { defineEmailJob } from './emailJob.js';
 
 dotenv.config();
 connectDB();
@@ -23,10 +26,16 @@ app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed HTTP methods
     allowedHeaders: 'Content-Type, Authorization', // Specify allowed headers
   }));
+  defineEmailJob(agenda);
 
+  agenda.on('ready', () => {
+    console.log('📆 Agenda is ready!');
+    agenda.start();
+  });
   app.use('/api/users',userRoutes);
   app.use('/api/contacts',contactRoutes);
   app.use('/api/email',emailRoutes);
   app.use('/api/campaign',campaignRoutes);
+  app.use('/api/schedule', scheduleRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

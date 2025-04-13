@@ -6,7 +6,9 @@ const campaignSchema = new mongoose.Schema({
   status: { type: String, enum: ['draft', 'active', 'completed', 'paused'], default: 'draft' },
   emailTemplateId: { type: mongoose.Schema.Types.ObjectId, ref: 'EmailTemplate' },
   contactIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }],
-  flowData: { type: Object },
+  nodes: { type: Array, default: [] }, // Save flow nodes here
+  edges: { type: Array, default: [] }, // Save flow edges here
+  
 }, { timestamps: true });
 
 const Campaign = mongoose.model('Campaign', campaignSchema);

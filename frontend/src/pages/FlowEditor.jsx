@@ -67,6 +67,13 @@ const FlowEditor = () => {
         <Controls />
         <Panel position="top-right" className="space-x-2">
           <button
+            onClick={() => addNode('leadSourceNode', { x: 100, y: 300 })}
+            className="bg-purple-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Leads
+          </button>
+          <button
             onClick={() => addNode('emailNode', { x: 100, y: 100 })}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
           >
@@ -79,13 +86,6 @@ const FlowEditor = () => {
           >
             <Plus className="w-4 h-4" />
             Delay
-          </button>
-          <button
-            onClick={() => addNode('leadSourceNode', { x: 100, y: 300 })}
-            className="bg-purple-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            Lead Source
           </button>
           <button
             onClick={saveFlow}
