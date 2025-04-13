@@ -20,18 +20,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://salesblink-prs.vercel.app/"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-app.use(cors({
-  origin: 'https://salesblink-prs.vercel.app/',
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed HTTP methods
-    allowedHeaders: 'Content-Type, Authorization', // Specify allowed headers
 
-  }));
+app.use(cors({
+  origin: 'https://salesblink-prs.vercel.app',
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
   app.options('*',cors());
 
   defineEmailJob(agenda);
