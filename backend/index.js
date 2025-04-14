@@ -16,19 +16,25 @@ connectDB();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+const allowCrossDomain = (req, res, next) => {
+  res.header(`Access-Control-Allow-Origin`, `https://salesblink-prs.vercel.app`);
+  res.header(`Access-Control-Allow-Methods`, `GET,PUT,POST,DELETE`);
+  res.header(`Access-Control-Allow-Headers`, `Content-Type`);
+  next();
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
+app.use(allowCrossDomain);
+// app.use(cors({
+//   origin: 'https://salesblink-prs.vercel.app',
+//   credentials: true,
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
 
-app.use(cors({
-  origin: 'https://salesblink-prs.vercel.app',
-  credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
-  app.options('*',cors());
+// app.options('*',cors());
 
   defineEmailJob(agenda);
 
