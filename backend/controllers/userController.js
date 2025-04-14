@@ -32,15 +32,24 @@ const authUser = asyncHandler(async (req, res) => {
   const token = req.cookies.jwt;
 
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-      if (err) {
-        // Token is invalid or expired
-        return res.status(401).json({ message: 'Not authorized, invalid token' });
-      } else {
-        // Token is valid
-        return res.sendStatus(200);
-      }
-    });
+    try{
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded._id).select('-password');
+      res.sendStatus(200);
+    }
+    catch(e){
+      console.error(e);
+      res.status(401).json({ message: 'Not authorized, invalid token' });
+    }
+    // jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    //   if (err) {
+    //     // Token is invalid or expired
+    //     return res.status(401).json({ message: 'Not authorized, invalid token' });
+    //   } else {
+    //     // Token is valid
+    //     return res.sendStatus(200);
+    //   }
+    // });
   } else {
     // No token in the cookie
     return res.status(401).json({ message: 'Not authorized, no token' });
