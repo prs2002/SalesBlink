@@ -13,6 +13,9 @@ const PrivateRoute = ({ children }) => {
       try {
         // Make an API call to your server to check if the JWT cookie is valid
         const response = await axios.get(`${BASE_URL}/api/users/auth`, {
+          email,
+          password,
+        }, {
           withCredentials: true,
         });
         if (response.status === 200) {
