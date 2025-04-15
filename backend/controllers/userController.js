@@ -29,8 +29,8 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
-  // const token = req.cookies.jwt;
   console.log('🔐 /auth route hit');
+  const token = req.cookies.jwt;
 
   if (token) {
   //   try{
